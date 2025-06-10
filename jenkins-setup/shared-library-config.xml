@@ -1,0 +1,47 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<!--
+  Jenkins共享库配置模板
+  
+  使用方法：
+  1. 将此文件内容复制到Jenkins的配置中
+  2. 修改相关参数（仓库地址、凭据等）
+  3. 重启Jenkins或重新加载配置
+  
+  或者通过Jenkins UI手动配置：
+  Manage Jenkins > Configure System > Global Pipeline Libraries
+-->
+
+<org.jenkinsci.plugins.workflow.libs.GlobalLibraries plugin="workflow-cps-global-lib@2.21">
+  <libraries>
+    <org.jenkinsci.plugins.workflow.libs.LibraryConfiguration>
+      <!-- 共享库名称 -->
+      <name>ai-analysis-lib</name>
+      
+      <!-- 默认版本/分支 -->
+      <defaultVersion>main</defaultVersion>
+      
+      <!-- 是否允许默认版本覆盖 -->
+      <allowVersionOverride>true</allowVersionOverride>
+      
+      <!-- 是否包含隐式加载 -->
+      <implicit>false</implicit>
+      
+      <!-- 检索方法配置 -->
+      <retriever class="org.jenkinsci.plugins.workflow.libs.SCMSourceRetriever">
+        <scm class="jenkins.plugins.git.GitSCMSource" plugin="git@4.8.3">
+          <!-- Git仓库地址 - 请修改为你的实际仓库地址 -->
+          <remote>https://github.com/your-org/jenkins-ai-analysis-lib.git</remote>
+          
+          <!-- 凭据ID - 如果是私有仓库需要配置 -->
+          <credentialsId>github-credentials</credentialsId>
+          
+          <!-- Git配置 -->
+          <traits>
+            <jenkins.plugins.git.traits.BranchDiscoveryTrait/>
+            <jenkins.plugins.git.traits.TagDiscoveryTrait/>
+          </traits>
+        </scm>
+      </retriever>
+    </org.jenkinsci.plugins.workflow.libs.LibraryConfiguration>
+  </libraries>
+</org.jenkinsci.plugins.workflow.libs.GlobalLibraries>
